@@ -1,0 +1,26 @@
+{
+    "name": "trusted-accounts-sdk-node",
+    "version": "1.0.2",
+    "description": "A simple SDK for Trusted Accounts for NodeJS",
+    "main": "index.js",
+    "types": "trusted-accounts-sdk-node.d.ts",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/TrustedAccounts/trusted-accounts-sdk-node"
+    },
+    "keywords": [
+      "trusted accounts",
+      "user verification",
+      "browser fingerprinting",
+      "email validation",
+      "bot protection",
+      "captcha",
+      "sdk"
+    ],
+    "author": "Ludwig Thoma",
+    "license": "MIT",
+    "dependencies": {
+
+    }
+}
+  
