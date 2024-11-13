@@ -1,11 +1,29 @@
 # Trusted Accounts SDK for Node.js
 
-### 1. Start the Validation Flow. 
-Place this code on your website to show a validation button that starts the validation process. Get your platform credentials by creating a developer account for free in the [**developer console**](https://developers.trustedaccounts.org/).
+The **Trusted Accounts Node SDK** allows you to integrate **user verification** and **validation** into your Node.js application with minimal setup. It supports the **OIDC flow**, **dynamic redirects**, and **session management**.
 
-```
+## Installation
+
+```bash
 npm install --save trusted-accounts-sdk-node
 ```
+
+### Setup
+Get your platform credentials by creating a free developer account here: [**developer console**](https://developers.trustedaccounts.org/).
+
+```typescript
+import TrustedAccountsSDK from 'trusted-accounts-sdk-node';
+
+const taClient = new TrustedAccountsSDK({
+  clientId: 'YOUR_CLIENT_ID',
+  clientSecret: 'YOUR_CLIENT_SECRET',
+  redirectUri: 'YOUR_REDIRECT_URL'
+});
+```
+
+### Example Usage
+
+#### Start the Validation Flow.
 
 ```typescript
 import TrustedAccountsClient from 'trusted-accounts-sdk-node';
@@ -27,14 +45,20 @@ app.get('/start-verification', async (req, res) => {
 });
 ```
 
-### 2. Handle the Callback
-After the user completes the verification, they will be redirected back to your redirect URL. Place this code on your website at this url to handle this callback and get the Trusted ID.
+### Handle the Callback
 
 ```typescript
 app.get('/callback', async (req, res) => {
-   // Get the Trusted ID by passing the code_verifier
-   const trustedId = await trustedClient.handleCallback(req, code_verifier);
-   res.send('Verification completed! Trusted ID: ' + trustedId);
+  const trustedCallback = await taClient.handleCallback(req.originalUrl);
+  res.send(`Verification completed! Trusted ID: ${trustedCallback.trustedId}`);
+});
+```
+
+### Retrieve User Data
+```typescript
+app.get('/user', async (req, res) => {
+  const user = await taClient.getUser('USER_TRUSTED_ID');
+  res.json(user);
 });
 ```
 

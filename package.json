@@ -1,26 +1,38 @@
 {
     "name": "trusted-accounts-sdk-node",
-    "version": "1.0.2",
+    "version": "1.2.4",
     "description": "A simple SDK for Trusted Accounts for NodeJS",
-    "main": "index.js",
-    "types": "trusted-accounts-sdk-node.d.ts",
+    "main": "dist/TrustedAccountsClient.js",
+    "types": "dist/types/TrustedAccountsClient.d.ts",
     "repository": {
-      "type": "git",
-      "url": "https://github.com/TrustedAccounts/trusted-accounts-sdk-node"
+        "type": "git",
+        "url": "https://github.com/TrustedAccounts/trusted-accounts-sdk-node"
+    },
+    "scripts": {
+        "build": "tsc",
+        "start": "node dist/TrustedAccountsClient.js",
+        "prepublishOnly": "npm run build"
+    },
+    "dependencies": {
+        "axios": "^1.7.7",
+        "crypto": "^1.0.1",
+        "openid-client": "^6.1.3",
+        "qs": "^6.13.0",
+        "url": "^0.11.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.17.6",
+        "typescript": "^5.6.3"
     },
     "keywords": [
-      "trusted accounts",
-      "user verification",
-      "browser fingerprinting",
-      "email validation",
-      "bot protection",
-      "captcha",
-      "sdk"
+        "trusted accounts",
+        "user verification",
+        "browser fingerprinting",
+        "email validation",
+        "bot protection",
+        "captcha",
+        "sdk"
     ],
     "author": "Ludwig Thoma",
-    "license": "MIT",
-    "dependencies": {
-
-    }
+    "license": "MIT"
 }
-  
