@@ -31,37 +31,28 @@ class TrustedAccountsClient {
   }
 
   // Generate the authorization URL (OIDC Authorization Code Flow)
-  public generateAuthorizationUrl(): string {
-    const state = this._generateRandomString(); // Generate a random state value
-    const nonce = this._generateRandomString(); // Generate a random nonce value
+  public generateAuthorizationUrl(state?: string, nonce?: string): string {
+    // If state or nonce is not provided, generate them
+    const generatedState = state || this._generateRandomString();
+    const generatedNonce = nonce || this._generateRandomString();
 
     const authUrl = new NodeURL(this.authUrl);
     authUrl.searchParams.append('client_id', this.clientId);
     authUrl.searchParams.append('redirect_uri', this.redirectUri);
     authUrl.searchParams.append('response_type', 'code'); // Using Authorization Code Flow
     authUrl.searchParams.append('scope', 'openid');
-    authUrl.searchParams.append('state', "asdfasdfsadf");
-    //authUrl.searchParams.append('nonce', nonce);
+    authUrl.searchParams.append('state', generatedState);
+    authUrl.searchParams.append('nonce', generatedNonce);
 
     // Return the URL for redirecting the user to the authorization server
     return authUrl.toString();
   }
 
   // Handle the callback and exchange the authorization code for tokens
-  public async handleCallback(code: string, state?: string, nonce?: string): Promise<any> {
+  public async handleCallback(code: string): Promise<any> {
     // Ensure the authorization code is present
     if (!code) {
         throw new Error('Authorization code is missing');
-    }
-
-    // Optionally verify state if it is provided
-    if (state) {
-        // Insert your state verification logic here, if applicable
-    }
-
-    // Optionally verify nonce if it is provided
-    if (nonce) {
-        // Insert your nonce verification logic here, if applicable
     }
 
     // Exchange the authorization code for tokens
