@@ -31,7 +31,7 @@ class TrustedAccountsClient {
   }
 
   // Generate the authorization URL (OIDC Authorization Code Flow)
-  public generateAuthorizationUrl(state?: string, nonce?: string): string {
+  public generateAuthorizationUrl(email: string, state?: string, nonce?: string): string {
     // If state or nonce is not provided, generate them
     const generatedState = state || this._generateRandomString();
     const generatedNonce = nonce || this._generateRandomString();
@@ -40,6 +40,7 @@ class TrustedAccountsClient {
     authUrl.searchParams.append('client_id', this.clientId);
     authUrl.searchParams.append('redirect_uri', this.redirectUri);
     authUrl.searchParams.append('response_type', 'code'); // Using Authorization Code Flow
+    authUrl.searchParams.append('email', email);
     authUrl.searchParams.append('scope', 'openid');
     authUrl.searchParams.append('state', generatedState);
     authUrl.searchParams.append('nonce', generatedNonce);
@@ -57,9 +58,9 @@ class TrustedAccountsClient {
 
     // Exchange the authorization code for tokens
     const tokens = await this._exchangeCodeForTokens(code);
-    const trusted_account = this.decodeIdToken(tokens.id_token);
+    const trustedId = this.decodeIdToken(tokens.id_token).sub;
 
-    return trusted_account;
+    return trustedId;
   }
 
   private async _exchangeCodeForTokens(code: string): Promise<Tokens> {
